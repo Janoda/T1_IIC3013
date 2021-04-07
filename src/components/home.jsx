@@ -36,7 +36,7 @@ function Home() {
             {dataB.map(el =>(
               <tr>
                 <td>Better Call Saul</td>
-                <td><Link to={"/episodes/?series=better+call+saul&season=" + el}>Temporada {el}</Link></td>
+                <td><Link to={"/series/Better Call Saul/" + el}>Temporada {el}</Link></td>
               </tr>
             ))}
            

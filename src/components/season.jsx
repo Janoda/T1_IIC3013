@@ -9,11 +9,13 @@ import axios from 'axios';
 
 
 function Season() {
+  let { seriesname, seasonid } = useParams();
   const match  = useRouteMatch();
   const [episodes, setEpisodes] = useState([])
   useEffect(() => {
     // GET request using axios inside useEffect React hook
-    axios.get('https://tarea-1-breaking-bad.herokuapp.com/api/episodes?series=Better+Call+Saul')
+    //axios.get('https://tarea-1-breaking-bad.herokuapp.com/api/episodes?series=Better+Call+Saul')
+    axios.get(`https://tarea-1-breaking-bad.herokuapp.com/api/episodes?series=${seriesname}`)
         .then(response => {
           const data = response.data
           setEpisodes(data)
@@ -21,8 +23,8 @@ function Season() {
         });
 
 // empty dependency array means this effect will only run once (like componentDidMount in classes)
-}, [setEpisodes]);
-  let { seriesname, seasonid } = useParams();
+}, [setEpisodes, seriesname]);
+  
 
     return (
       <Container>
