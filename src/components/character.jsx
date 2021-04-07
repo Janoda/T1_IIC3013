@@ -1,17 +1,14 @@
-import {React, useEffect, useState} from "react"
+import { React, useEffect, useState } from "react"
 import { Container, Jumbotron, Table } from "react-bootstrap";
-import {
-  Link,
-  useParams,
-  useRouteMatch,
-} from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from 'axios';
 
 
 function Character() {
   let { charname } = useParams();
-  const match  = useRouteMatch();
   const [character, setCharacter] = useState([])
+  const [quotes, setQuotes] = useState([])
+
 
   useEffect(() => {
     // GET request using axios inside useEffect React hook
@@ -21,6 +18,13 @@ function Character() {
           setCharacter(data)
           console.log(data)
         });
+    
+    axios.get(`https://tarea-1-breaking-bad.herokuapp.com/api/quote?author=${charname}`)
+        .then(response => {
+          const data = response.data
+          setQuotes(data)
+          console.log("quotess es", data)
+        });
 
 // empty dependency array means this effect will only run once (like componentDidMount in classes)
 }, [setCharacter, charname]);
@@ -29,7 +33,7 @@ function Character() {
     return (
       <Container>
         <Jumbotron>
-          <h1 className = "header"> {charname}   </h1>
+          <h1 className = "header"> {charname}  </h1>
           <img src={character[0] && character[0].img} alt="asd" className="rounded mx-auto d-block" style={{height:"330px"}}></img>
 
 
@@ -80,6 +84,12 @@ function Character() {
            
           </tbody>
         </Table>
+        <h1 className="header">Quotes</h1>
+        <ul>
+            {quotes[0] && quotes.map(el => (
+                <li> {el.quote} </li>
+            ))}
+        </ul>
 
         </Jumbotron>
       </Container>
